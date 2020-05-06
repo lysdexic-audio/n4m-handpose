@@ -3,4 +3,4 @@ Wraps HandPose inside electron and serves the detected parts via MaxAPI.
 
 
 
-Based around (https://github.com/yuichkun)[Yuichi Yogo]'s great work porting Electron into Node For Max
+Based around (Yuichi Yogo's)[https://github.com/yuichkun] great work porting Electron into Node For Max
