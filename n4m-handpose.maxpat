@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 0,
-			"revision" : 8,
+			"minor" : 1,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -43,8 +43,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 761.0, 105.0, 150.0, 21.0 ],
-					"text" : "completed ✓"
+					"patching_rect" : [ 761.0, 105.0, 150.0, 20.0 ]
 				}
 
 			}
@@ -75,8 +74,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 0,
-							"revision" : 8,
+							"minor" : 1,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -222,8 +221,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 0,
-											"revision" : 8,
+											"minor" : 1,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -409,6 +408,8 @@
 													"saved_object_attributes" : 													{
 														"autostart" : 0,
 														"defer" : 0,
+														"node_bin_path" : "",
+														"npm_bin_path" : "",
 														"watch" : 0
 													}
 ,
@@ -1009,8 +1010,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 0,
-							"revision" : 8,
+							"minor" : 1,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1178,8 +1179,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
