@@ -48,7 +48,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 809.0, 45.0, 141.0, 40.0 ],
-					"presentation_linecount" : 2,
 					"text" : "1. Run NPM init inside subpatch first"
 				}
 
@@ -61,7 +60,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1018.0, 462.0, 50.0, 47.0 ],
-					"presentation_linecount" : 3,
 					"text" : "0: x\n1: y\n2: z"
 				}
 
@@ -89,7 +87,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 786.0, 420.5, 187.0, 55.0 ],
-					"presentation_linecount" : 2,
 					"text" : "3. Retrieve positions from Dictionary",
 					"textjustification" : 1
 				}
@@ -103,33 +100,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 607.0, 595.0, 170.0, 22.0 ],
-					"presentation_linecount" : 3,
 					"text" : "get boundingBox::bottomRight"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-10",
-					"items" : "<empty>",
-					"maxclass" : "umenu",
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "int", "", "" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 718.0, 749.0, 100.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-6",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 597.0, 684.0, 73.0, 22.0 ],
-					"text" : "prepend get"
 				}
 
 			}
@@ -578,8 +549,6 @@
 													"saved_object_attributes" : 													{
 														"autostart" : 0,
 														"defer" : 0,
-														"node_bin_path" : "",
-														"npm_bin_path" : "",
 														"watch" : 0
 													}
 ,
@@ -1019,6 +988,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
