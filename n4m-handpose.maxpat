@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 280.0, 135.0, 1143.0, 960.0 ],
+		"rect" : [ 34.0, 56.0, 1143.0, 960.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -60,255 +60,6 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 809.0, 45.0, 141.0, 40.0 ],
 					"text" : "1. Run NPM init inside subpatch first"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-31",
-					"linecount" : 3,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 1018.0, 462.0, 50.0, 47.0 ],
-					"text" : "0: x\n1: y\n2: z"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-30",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 944.0, 489.0, 50.0, 20.0 ],
-					"text" : "point"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"bubble" : 1,
-					"bubbleside" : 2,
-					"fontname" : "Arial",
-					"fontsize" : 13.0,
-					"id" : "obj-18",
-					"linecount" : 2,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 786.0, 420.5, 187.0, 55.0 ],
-					"text" : "3. Retrieve positions from Dictionary",
-					"textjustification" : 1
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-15",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 607.0, 595.0, 170.0, 22.0 ],
-					"text" : "get boundingBox::bottomRight"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-40",
-					"items" : [ "thumb", ",", "indexFinger", ",", "middleeFinger", ",", "ringFinger", ",", "pinky", ",", "palmBase" ],
-					"maxclass" : "umenu",
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "int", "", "" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 829.5, 516.0, 100.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-39",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 796.0, 595.0, 73.0, 22.0 ],
-					"text" : "prepend get"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-38",
-					"maxclass" : "number",
-					"maximum" : 3,
-					"minimum" : 0,
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "bang" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 944.0, 516.0, 50.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-34",
-					"maxclass" : "number",
-					"maximum" : 2,
-					"minimum" : 0,
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "bang" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 1018.0, 516.0, 50.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-20",
-					"linecount" : 2,
-					"maxclass" : "newobj",
-					"numinlets" : 8,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 796.0, 552.0, 278.0, 35.0 ],
-					"text" : "combine annotations :: thumb :: 0 [ 0 ] @triggers 2 4 6"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
-					"id" : "obj-29",
-					"linecount" : 2,
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 336.5, 380.0, 66.0, 35.0 ],
-					"text" : "print vals @popup 1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
-					"id" : "obj-28",
-					"linecount" : 2,
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 408.0, 380.0, 71.0, 35.0 ],
-					"text" : "print keys @popup 1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.647058823529412, 0.823529411764706, 0.329411764705882, 1.0 ],
-					"id" : "obj-23",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 796.0, 697.0, 49.0, 22.0 ],
-					"text" : "s toDict"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
-					"id" : "obj-25",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 408.0, 352.0, 41.0, 22.0 ],
-					"text" : "r keys"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
-					"id" : "obj-26",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 336.5, 352.0, 37.0, 22.0 ],
-					"text" : "r vals"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.647058823529412, 0.823529411764706, 0.329411764705882, 1.0 ],
-					"id" : "obj-17",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 80.0, 343.0, 47.0, 22.0 ],
-					"text" : "r toDict"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
-					"id" : "obj-12",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 84.0, 403.0, 43.0, 22.0 ],
-					"text" : "s keys"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
-					"id" : "obj-8",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 43.0, 403.0, 39.0, 22.0 ],
-					"text" : "s vals"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-4",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 21.0, 343.0, 58.0, 22.0 ],
-					"text" : "loadbang"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-9",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
-					"patching_rect" : [ 21.0, 374.0, 85.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"embed" : 0,
-						"parameter_enable" : 0,
-						"parameter_mappable" : 0
-					}
-,
-					"text" : "dict handPose"
 				}
 
 			}
@@ -658,8 +409,6 @@
 													"saved_object_attributes" : 													{
 														"autostart" : 0,
 														"defer" : 0,
-														"node_bin_path" : "",
-														"npm_bin_path" : "",
 														"watch" : 0
 													}
 ,
@@ -883,6 +632,255 @@
 					}
 ,
 					"text" : "p init"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-31",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1018.0, 462.0, 50.0, 47.0 ],
+					"text" : "0: x\n1: y\n2: z"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-30",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 944.0, 489.0, 50.0, 20.0 ],
+					"text" : "point"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"bubble" : 1,
+					"bubbleside" : 2,
+					"fontname" : "Arial",
+					"fontsize" : 13.0,
+					"id" : "obj-18",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 786.0, 420.5, 187.0, 55.0 ],
+					"text" : "3. Retrieve positions from Dictionary",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-15",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 607.0, 595.0, 170.0, 22.0 ],
+					"text" : "get boundingBox::bottomRight"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-40",
+					"items" : [ "thumb", ",", "indexFinger", ",", "middleeFinger", ",", "ringFinger", ",", "pinky", ",", "palmBase" ],
+					"maxclass" : "umenu",
+					"numinlets" : 1,
+					"numoutlets" : 3,
+					"outlettype" : [ "int", "", "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 829.5, 516.0, 100.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-39",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 796.0, 595.0, 73.0, 22.0 ],
+					"text" : "prepend get"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-38",
+					"maxclass" : "number",
+					"maximum" : 3,
+					"minimum" : 0,
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 944.0, 516.0, 50.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-34",
+					"maxclass" : "number",
+					"maximum" : 2,
+					"minimum" : 0,
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 1018.0, 516.0, 50.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"linecount" : 2,
+					"maxclass" : "newobj",
+					"numinlets" : 8,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 796.0, 552.0, 278.0, 35.0 ],
+					"text" : "combine annotations :: thumb :: 0 [ 0 ] @triggers 2 4 6"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
+					"id" : "obj-29",
+					"linecount" : 2,
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 336.5, 380.0, 66.0, 35.0 ],
+					"text" : "print vals @popup 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
+					"id" : "obj-28",
+					"linecount" : 2,
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 408.0, 380.0, 71.0, 35.0 ],
+					"text" : "print keys @popup 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.647058823529412, 0.823529411764706, 0.329411764705882, 1.0 ],
+					"id" : "obj-23",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 796.0, 697.0, 49.0, 22.0 ],
+					"text" : "s toDict"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
+					"id" : "obj-25",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 408.0, 352.0, 41.0, 22.0 ],
+					"text" : "r keys"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
+					"id" : "obj-26",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 336.5, 352.0, 37.0, 22.0 ],
+					"text" : "r vals"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.647058823529412, 0.823529411764706, 0.329411764705882, 1.0 ],
+					"id" : "obj-17",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 80.0, 343.0, 47.0, 22.0 ],
+					"text" : "r toDict"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.423529411764706, 0.83921568627451, 0.996078431372549, 1.0 ],
+					"id" : "obj-12",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 84.0, 403.0, 43.0, 22.0 ],
+					"text" : "s keys"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.996078431372549, 0.827450980392157, 0.192156862745098, 1.0 ],
+					"id" : "obj-8",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 43.0, 403.0, 39.0, 22.0 ],
+					"text" : "s vals"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 21.0, 343.0, 58.0, 22.0 ],
+					"text" : "loadbang"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 4,
+					"outlettype" : [ "dictionary", "", "", "" ],
+					"patching_rect" : [ 21.0, 374.0, 85.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"embed" : 0,
+						"parameter_enable" : 0,
+						"parameter_mappable" : 0
+					}
+,
+					"text" : "dict handPose"
 				}
 
 			}
@@ -1180,6 +1178,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -1360,7 +1360,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "index.js",
-				"bootpath" : "~/Downloads/n4m-handpose-master",
+				"bootpath" : "~/Documents/Max/Patches/NODE/n4m-handpose",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1

@@ -48,7 +48,8 @@ function sendToMaxPatch(predictions) {
 
 //------------------------------------
 
-let fingerLookupIndices = {
+let fingerLookupIndices =
+{
     thumb: [0, 1, 2, 3, 4],
     indexFinger: [0, 5, 6, 7, 8],
     middleFinger: [0, 9, 10, 11, 12],
@@ -104,7 +105,8 @@ function drawPath(ctx, points, closePath)
  * Loads a the camera to be used in the demo
  *
  */
-async function setupCamera() {
+async function setupCamera()
+{
 	if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 		throw new Error(
 			"Browser API navigator.mediaDevices.getUserMedia not available");
@@ -132,7 +134,8 @@ async function setupCamera() {
 	});
 }
 
-async function changeVideoSource(newDevice) {
+async function changeVideoSource(newDevice)
+{
 	const video = document.getElementById("video");
 	video.srcObject = null;
 	const mobile = isMobile();
@@ -148,33 +151,40 @@ async function changeVideoSource(newDevice) {
 	video.srcObject = stream;
 }
 
-async function loadVideo() {
+async function loadVideo()
+{
 	const video = await setupCamera();
 	video.play();
 
 	return video;
 }
 
-async function listVideoDevices() {
+async function listVideoDevices()
+{
 	const allDevices = await navigator.mediaDevices.enumerateDevices();
 	const videoDevices = allDevices.filter(device => device.kind === "videoinput").map(device => device.label);
 	return videoDevices;
 }
 
-const guiState = {
+const guiState =
+{
 	devices: {
 		videoDevices: []
 	},
-	input: {
-
+	//input: {
+  //
 	//commenting this out until crashes resolved
     //maxContinuousChecks: 480,
     //detectionConfidence: 0.8,
     //iouThreshold: 0.3,
     //scoreThreshold: 0.75
-	},
+	//},
 
 	output: {
+    outputConfidence: true,
+    outputBoundingBox: true,
+    outputLandmarks: false,
+    outputAnnotations: true,
 		showVideo: true,
 
 	},
@@ -184,7 +194,8 @@ const guiState = {
 /**
  * Sets up dat.gui controller on the top-right of the window
  */
-async function setupGui(cameras, net) {
+async function setupGui(cameras, net)
+{
 	guiState.net = net;
 	if (cameras.length > 0) {
 		guiState.camera = cameras[0].deviceId;
@@ -197,7 +208,8 @@ async function setupGui(cameras, net) {
 	const videoDevices = await listVideoDevices();
 	const videoDeviceController = devices.add(guiState.devices, "videoDevices", videoDevices);
 
-	videoDeviceController.onChange(async function (selectedDevice) {
+	videoDeviceController.onChange(async function (selectedDevice)
+  {
 		const allDevices = await navigator.mediaDevices.enumerateDevices();
 		const matchedDeviceId = allDevices.filter(device => device.label === selectedDevice).map(device => device.deviceId);
 		changeVideoSource(matchedDeviceId);
@@ -217,6 +229,10 @@ async function setupGui(cameras, net) {
   //input.open();
 
 	let output = gui.addFolder("Output");
+  output.add(guiState.output, "outputConfidence");
+  output.add(guiState.output, "outputBoundingBox");
+  output.add(guiState.output, "outputAnnotations");
+  output.add(guiState.output, "outputLandmarks");
 	output.add(guiState.output, "showVideo");
 	output.open();
 
@@ -241,14 +257,15 @@ async function setupGui(cameras, net) {
 /**
  * Sets up a frames per second panel on the top-left of the window
  */
-function setupFPS() {
+function setupFPS()
+{
 	stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
 	document.body.appendChild(stats.dom);
 }
 
 
-function detectHands(video, net) {
-
+function detectHands(video, net)
+{
 	const canvas = document.getElementById("output");
 	const ctx = canvas.getContext("2d");
 	// since images are being fed from a webcam
@@ -257,7 +274,7 @@ function detectHands(video, net) {
 	canvas.width = videoWidth;
 	canvas.height = videoHeight;
 
-  async function poseDetectionFrame()
+  async function handDetectionFrame()
   {
 	//	if (guiState.changeToMaxChecks || guiState.changeToConfidence || guiState.changeToiou || guiState.changeToScore ) {
 	//		// Important to purge variables and free up GPU memory
@@ -272,13 +289,13 @@ function detectHands(video, net) {
     //  guiState.changeToScore = null;
 	//	}
 
-
 		// Begin monitoring code for frames per second
 		stats.begin();
 
 		ctx.clearRect(0, 0, videoWidth, videoHeight);
 
-		if (guiState.output.showVideo) {
+		if (guiState.output.showVideo)
+    {
 			ctx.save();
 			ctx.scale(-1, 1);
 			ctx.translate(-videoWidth, 0);
@@ -291,45 +308,50 @@ function detectHands(video, net) {
 
     if (predictions.length > 0)
     {
-      handposeDict["handInViewConfidence"] = predictions[0].handInViewConfidence;
-      handposeDict["boundingBox"] = predictions[0].boundingBox;
-      handposeDict["annotations"] = {};
+      if(guiState.output.outputConfidence) handposeDict["handInViewConfidence"] = predictions[0].handInViewConfidence;
+      if(guiState.output.outputBoundingBox) handposeDict["boundingBox"] = predictions[0].boundingBox;
+      if(guiState.output.outputAnnotations) handposeDict["annotations"] = {};
       for (let i = 0; i < predictions.length; i++)
       {
         const keypoints = predictions[i].annotations;
         // Log hand keypoints.
-        for (var key in keypoints)
+        if(guiState.output.outputAnnotations)
         {
-          // check if the property/key is defined in the object itself, not in parent
-          if (keypoints.hasOwnProperty(key))
+          for (var key in keypoints)
           {
-            handposeDict["annotations"][key] = {};
-            keypoints[key].forEach(([value1, value2, value3], idx) => handposeDict["annotations"][key][idx] = [value1, value2, value3]);
+            // check if the property/key is defined in the object itself, not in parent
+            if (keypoints.hasOwnProperty(key))
+            {
+              handposeDict["annotations"][key] = {};
+              keypoints[key].forEach(([value1, value2, value3], idx) => handposeDict["annotations"][key][idx] = [value1, value2, value3]);
+            }
           }
         }
       }
 
-      handposeDict["landmarks"] = {};
-      predictions[0].landmarks.forEach(([value1, value2, value3], idx) => handposeDict["landmarks"][idx] = [value1, value2, value3]);
-
-
+      if(guiState.output.outputLandmarks)
+      {
+        handposeDict["landmarks"] = {};
+        predictions[0].landmarks.forEach(([value1, value2, value3], idx) => handposeDict["landmarks"][idx] = [value1, value2, value3]);
+      }
 
       const result = predictions[0].landmarks;
       //drawKeypoints(ctx, result, predictions[0].annotations);
       drawKeypoints(ctx, result);
+
+      //send raw arrays to MaxMSP
+      //sendToMaxPatch(predictions[0]);
+
+      //send formatted vals to MaxMSP
+      sendToMaxPatch(handposeDict);
     }
 
-    //send raw arrays to MaxMSP
-    //sendToMaxPatch(predictions[0]);
-
-    //send formatted vals to MaxMSP
-    sendToMaxPatch(handposeDict);
 		stats.end();
 
-		requestAnimationFrame(poseDetectionFrame);
+		requestAnimationFrame(handDetectionFrame);
 	}
 
-	poseDetectionFrame();
+	handDetectionFrame();
 }
 
 /**
