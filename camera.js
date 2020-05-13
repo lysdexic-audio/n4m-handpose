@@ -266,92 +266,94 @@ function setupFPS()
 
 function detectHands(video, net)
 {
-	const canvas = document.getElementById("output");
-	const ctx = canvas.getContext("2d");
-	// since images are being fed from a webcam
-	const flipHorizontal = true;
+  video.addEventListener('loadeddata', function() {
+  	const canvas = document.getElementById("output");
+  	const ctx = canvas.getContext("2d");
+  	// since images are being fed from a webcam
+  	const flipHorizontal = true;
 
-	canvas.width = videoWidth;
-	canvas.height = videoHeight;
+  	canvas.width = videoWidth;
+  	canvas.height = videoHeight;
 
-  async function handDetectionFrame()
-  {
-	//	if (guiState.changeToMaxChecks || guiState.changeToConfidence || guiState.changeToiou || guiState.changeToScore ) {
-	//		// Important to purge variables and free up GPU memory
-	//		guiState.net.dispose();
-
-	//		//guiState.net = await handpose.load(+guiState.changeToArchitecture);
-    //  guiState.net = await handpose.load(guiState.maxContinuousChecks, guiState.detectionConfidence, guiState.iouThreshold, guiState.scoreThreshold);
-	//
-	//		guiState.changeToMaxChecks = null;
-    //  guiState.changeToMaxConfidence = null;
-    //  guiState.changeToiou = null;
-    //  guiState.changeToScore = null;
-	//	}
-
-		// Begin monitoring code for frames per second
-		stats.begin();
-
-		ctx.clearRect(0, 0, videoWidth, videoHeight);
-
-		if (guiState.output.showVideo)
+    async function handDetectionFrame()
     {
-			ctx.save();
-			ctx.scale(-1, 1);
-			ctx.translate(-videoWidth, 0);
-			ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-			ctx.restore();
-		}
+  	//	if (guiState.changeToMaxChecks || guiState.changeToConfidence || guiState.changeToiou || guiState.changeToScore ) {
+  	//		// Important to purge variables and free up GPU memory
+  	//		guiState.net.dispose();
 
-    const predictions = await guiState.net.estimateHands(video, true);
-    let handposeDict = {};
+  	//		//guiState.net = await handpose.load(+guiState.changeToArchitecture);
+      //  guiState.net = await handpose.load(guiState.maxContinuousChecks, guiState.detectionConfidence, guiState.iouThreshold, guiState.scoreThreshold);
+  	//
+  	//		guiState.changeToMaxChecks = null;
+      //  guiState.changeToMaxConfidence = null;
+      //  guiState.changeToiou = null;
+      //  guiState.changeToScore = null;
+  	//	}
 
-    if (predictions.length > 0)
-    {
-      if(guiState.output.outputConfidence) handposeDict["handInViewConfidence"] = predictions[0].handInViewConfidence;
-      if(guiState.output.outputBoundingBox) handposeDict["boundingBox"] = predictions[0].boundingBox;
-      if(guiState.output.outputAnnotations) handposeDict["annotations"] = {};
-      for (let i = 0; i < predictions.length; i++)
+  		// Begin monitoring code for frames per second
+  		stats.begin();
+
+  		ctx.clearRect(0, 0, videoWidth, videoHeight);
+
+  		if (guiState.output.showVideo)
       {
-        const keypoints = predictions[i].annotations;
-        // Log hand keypoints.
-        if(guiState.output.outputAnnotations)
+  			ctx.save();
+  			ctx.scale(-1, 1);
+  			ctx.translate(-videoWidth, 0);
+  			ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+  			ctx.restore();
+  		}
+
+      const predictions = await guiState.net.estimateHands(video, true);
+      let handposeDict = {};
+
+      if (predictions.length > 0)
+      {
+        if(guiState.output.outputConfidence) handposeDict["handInViewConfidence"] = predictions[0].handInViewConfidence;
+        if(guiState.output.outputBoundingBox) handposeDict["boundingBox"] = predictions[0].boundingBox;
+        if(guiState.output.outputAnnotations) handposeDict["annotations"] = {};
+        for (let i = 0; i < predictions.length; i++)
         {
-          for (var key in keypoints)
+          const keypoints = predictions[i].annotations;
+          // Log hand keypoints.
+          if(guiState.output.outputAnnotations)
           {
-            // check if the property/key is defined in the object itself, not in parent
-            if (keypoints.hasOwnProperty(key))
+            for (var key in keypoints)
             {
-              handposeDict["annotations"][key] = {};
-              keypoints[key].forEach(([value1, value2, value3], idx) => handposeDict["annotations"][key][idx] = [value1, value2, value3]);
+              // check if the property/key is defined in the object itself, not in parent
+              if (keypoints.hasOwnProperty(key))
+              {
+                handposeDict["annotations"][key] = {};
+                keypoints[key].forEach(([value1, value2, value3], idx) => handposeDict["annotations"][key][idx] = [value1, value2, value3]);
+              }
             }
           }
         }
+
+        if(guiState.output.outputLandmarks)
+        {
+          handposeDict["landmarks"] = {};
+          predictions[0].landmarks.forEach(([value1, value2, value3], idx) => handposeDict["landmarks"][idx] = [value1, value2, value3]);
+        }
+
+        const result = predictions[0].landmarks;
+        //drawKeypoints(ctx, result, predictions[0].annotations);
+        drawKeypoints(ctx, result);
+
+        //send raw arrays to MaxMSP
+        //sendToMaxPatch(predictions[0]);
+
+        //send formatted vals to MaxMSP
+        sendToMaxPatch(handposeDict);
       }
 
-      if(guiState.output.outputLandmarks)
-      {
-        handposeDict["landmarks"] = {};
-        predictions[0].landmarks.forEach(([value1, value2, value3], idx) => handposeDict["landmarks"][idx] = [value1, value2, value3]);
-      }
+  		stats.end();
 
-      const result = predictions[0].landmarks;
-      //drawKeypoints(ctx, result, predictions[0].annotations);
-      drawKeypoints(ctx, result);
+  		requestAnimationFrame(handDetectionFrame);
+  	}
 
-      //send raw arrays to MaxMSP
-      //sendToMaxPatch(predictions[0]);
-
-      //send formatted vals to MaxMSP
-      sendToMaxPatch(handposeDict);
-    }
-
-		stats.end();
-
-		requestAnimationFrame(handDetectionFrame);
-	}
-
-	handDetectionFrame();
+  	handDetectionFrame();
+  }, false);
 }
 
 /**
