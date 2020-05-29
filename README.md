@@ -5,6 +5,9 @@ Wraps [MediaPipe Handpose](https://github.com/tensorflow/tfjs-models/tree/master
 
 Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Electron + Tensorflow models into [Node For Max](https://github.com/Cycling74/n4m-examples)
 
+Handpose is used in Arthur Parmentier's [Soundpainting](https://github.com/arthur-parmentier/soundpainting-signs-gestures-recognition) Project
+Are you using n4m-handpose in your project? Let me know!
+
 
 # Steps
 1. Install npm dependencies by clicking the indicated button. Since Electron's kind of big in size, this make take a while depending on your network environment. When the message object says it's 'completed' you'll never have to do this step again.
@@ -12,4 +15,4 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 3. The node.script emits the detected results as a dict - retrieve values using the dictionary keys (objects on the right) 
 
 
-Handpose is used in Arthur Parmentier's [Soundpainting](https://github.com/arthur-parmentier/soundpainting-signs-gestures-recognition) Project
+
