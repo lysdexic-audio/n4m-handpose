@@ -10,3 +10,6 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 1. Install npm dependencies by clicking the indicated button. Since Electron's kind of big in size, this make take a while depending on your network environment. When the message object says it's 'completed' you'll never have to do this step again.
 2. Click on the toggle button to launch MediaPipe Handpose. 
 3. The node.script emits the detected results as a dict - retrieve values using the dictionary keys (objects on the right) 
+
+
+Handpose is used in Arthur Parmentier's [Soundpainting](https://github.com/arthur-parmentier/soundpainting-signs-gestures-recognition) Project
