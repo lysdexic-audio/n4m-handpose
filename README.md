@@ -15,4 +15,8 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 3. The node.script emits the detected results as a dict - retrieve values using the dictionary keys (objects on the right) 
 
 
-
+# Changelog
+- n4m-handposeM4L (Max For Live Device) AMXD now available
+- Handpose model controls now available in electron window UI
+- Handpose model control settings save automatically and persist 
+- Render window on or offscreen using arguments to node.script
