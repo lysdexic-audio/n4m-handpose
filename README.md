@@ -19,6 +19,7 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 ### Changelog
 - n4m-handposeM4L (Max For Live Device) AMXD now available
 - Handpose model controls now available in electron window UI
-- Handpose model control settings save automatically and persist/reload 
+- Skeleton fill and stroke colour available in electron window UI
+- Handpose model control settings and skeleton fill and stroke colour save automatically and persist/reload 
 - Render window on or offscreen using arguments to node.script
 - Hand landmarks are scaled and rendered to a jitter window (m4l + maxmsp)
