@@ -9,12 +9,13 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 - *Are you using n4m-handpose in your project? Let me know*
 
 
-# Steps
+# Steps (MaxMSP)
 1. Install npm dependencies by clicking the indicated button. Since Electron's kind of big in size, this make take a while depending on your network environment. When the message object says it's 'completed' you'll never have to do this step again.
-2. Click on the toggle button to launch MediaPipe Handpose. 
+2. Click on the toggle button to launch n4m-handpose. 
 3. The node.script emits the detected results as a dictionary, which has been parsed into (x,y,z) lists of each finger's tip positions & palmbase
 4. All landmarks are also aggregated to a list to send to [Wekinator](http://www.wekinator.org/) if you'd like to perform gesture recognition with the data (sending to port 11000)
 
+# Steps (MaxForLive)
 
 ### Changelog
 - n4m-handposeM4L (Max For Live Device) AMXD now available
