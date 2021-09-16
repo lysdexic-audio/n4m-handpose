@@ -14,17 +14,74 @@
  * limitations under the License.
  * =============================================================================
  */
+
 const SocketIOClient = require("socket.io-client");
 const io = new SocketIOClient("http://localhost:3000");
+//const statsShow = (windowWidth >= 360) ? true : false;
+const statsShow = true;
+
 const socket = io.connect();
 socket.on("connect", () => {
 	console.log("Connected to Max 8");
-  //socket.emit("dispatch", "Socket is connected, Ready");
+//socket.emit("dispatch", "Socket is connected, Ready");
 });
+
+socket.on("connect", () => {
+	console.log("Connected to Max 8");
+});
+
+const Store = require('electron-store');
+
+const schema = {
+	storemaxContinuousChecks: {
+		type: 'number',
+		maximum: 960,
+		minimum: 1,
+		default: 960
+	},
+	storedetectionConfidence: {
+		type: 'number',
+    maximum: 1.0,
+    minimum: 0.2,
+    default: 0.2
+	},
+  storeiouThreshold: {
+    type: 'number',
+    maximum: 1.0,
+    minimum: 0.2,
+    default: 0.93
+  },
+  storescoreThreshold: {
+    type: 'number',
+    maximum: 1.0,
+    minimum: 0.2,
+    default: 0.55
+  },
+  storehand_fillColour: {
+    type: 'string',
+    default: "#00FF77"
+  },
+  storehand_strokeColour: {
+    type: 'string',
+    default: "#002DFF"
+  },
+};
+
+const store = new Store({schema});
+
+var palette =
+{
+  fillColour: store.get("storehand_fillColour"), // CSS string
+  strokeColour: store.get("storehand_strokeColour") // CSS string
+};
 
 const handpose = require("@tensorflow-models/handpose");
 const dat = require("dat.gui");
 const Stats = require("stats.js");
+
+//const _color = "#32EEDB"; // cyan
+var _fillColour = store.get("storehand_fillColour"); // green
+var _strokeColour = store.get("storehand_strokeColour"); // red
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -61,7 +118,8 @@ function drawPoint(ctx, y, x, r)
 {
 	ctx.beginPath();
 	ctx.arc(x, y, r, 0, 2 * Math.PI);
-	//ctx.fillStyle = _color;
+  ctx.fillStyle = _fillColour;
+  ctx.strokeStyle = _strokeColour;
 	ctx.fill();
 }
 
@@ -171,14 +229,13 @@ const guiState =
 	devices: {
 		videoDevices: []
 	},
-	//input: {
-  //
-	//commenting this out until crashes resolved
-    //maxContinuousChecks: 480,
-    //detectionConfidence: 0.8,
-    //iouThreshold: 0.3,
-    //scoreThreshold: 0.75
-	//},
+
+	input: {
+    maxContinuousChecks: store.get("storemaxContinuousChecks"),
+    detectionConfidence: store.get("storedetectionConfidence"),
+    iouThreshold: store.get("storeiouThreshold"),
+    scoreThreshold: store.get("storescoreThreshold")
+	},
 
 	output: {
     outputConfidence: true,
@@ -216,42 +273,58 @@ async function setupGui(cameras, net)
 	});
 
   //add params to GUI
-  //let input = gui.addFolder("Input");
-  //Params from https://github.com/tensorflow/tfjs-models/tree/master/handpose
-  //const maxContinuousChecksController = input.add(
-  //  guiState.input, "maxContinuousChecks", [60, 120, 240, 480]);
-  //const detectionConfidenceController = input.add(
-  //  guiState.input, "detectionConfidence").min(0.2).max(1.0);
-  //const iouThresholdController = input.add(
-  //  guiState.input, "iouThreshold").min(0.2).max(1.0);
-  //const scoreThresholdController =  input.add(
-  //  guiState.input, "scoreThreshold").min(0.2).max(1.0);
-  //input.open();
+  let input = gui.addFolder("Input");
+  // Params from https://github.com/tensorflow/tfjs-models/tree/master/handpose
+  // - maxContinuousChecks
+  // - How many frames to go without running the bounding box detector. Defaults to infinity.
+  // - Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
+  input.add(guiState.input, "maxContinuousChecks", [60, 120, 240, 480, 960]).onChange(async val => {
+    //guiState.net.dispose();
+    store.set("storemaxContinuousChecks", Number(val));
+    guiState.net = await handpose.load({maxContinuousChecks: Number(val)});
+  });
+  // - detectionConfidence
+  // - Threshold for discarding a prediction. Defaults to 0.8.
+  input.add(guiState.input, "detectionConfidence").min(0.2).max(1.0).onChange(async val => {
+    //guiState.net.dispose();
+    store.set("storedetectionConfidence", val);
+    guiState.net = await handpose.load({detectionConfidence: val});
+  });
+  // - iouThreshold
+  // - A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression.
+  // - Must be between [0, 1]. Defaults to 0.3.
+  input.add(guiState.input, "iouThreshold").min(0.2).max(1.0).onChange(async val => {
+    //guiState.net.dispose();
+    store.set("storeiouThreshold", val);
+    guiState.net = await handpose.load({iouThreshold: val});
+  });
+  // - scoreThreshold
+  // - A threshold for deciding when to remove boxes based on score in non-maximum suppression. Defaults to 0.75.
+  input.add(guiState.input, "scoreThreshold").min(0.2).max(1.0).onChange(async val => {
+    //guiState.net.dispose();
+    store.set("storescoreThreshold", val);
+    guiState.net = await handpose.load({scoreThreshold: val});
+  });
+  input.close();
 
 	let output = gui.addFolder("Output");
+  output.addColor(palette, 'fillColour').onChange(async val => {
+    _fillColour = val;
+    store.set("storehand_fillColour", val);
+  });
+  output.addColor(palette, 'strokeColour').onChange(async val => {
+    _strokeColour = val;
+    store.set("storehand_strokeColour", val);
+  });
   output.add(guiState.output, "outputConfidence");
   output.add(guiState.output, "outputBoundingBox");
   output.add(guiState.output, "outputAnnotations");
   output.add(guiState.output, "outputLandmarks");
 	output.add(guiState.output, "showVideo");
-	output.open();
+	output.close();
 
-  //maxContinuousChecksController.onChange(function (maxChecks) {
-  //  guiState.changeToMaxChecks = maxChecks;
-  //});
-
-  //detectionConfidenceController.onChange(function (confidence) {
-  //  guiState.changeToConfidence = confidence;
-  //});
-
-  //iouThresholdController.onChange(function (iou) {
-  //  guiState.changeToiou = iou;
-  //});
-
-  //scoreThresholdController.onChange(function (scoreThresh) {
-  //  guiState.changeToScore = scoreThresh;
-  //});
-
+  //gui.open();
+  gui.close();
 }
 
 /**
@@ -277,21 +350,8 @@ function detectHands(video, net)
 
     async function handDetectionFrame()
     {
-  	//	if (guiState.changeToMaxChecks || guiState.changeToConfidence || guiState.changeToiou || guiState.changeToScore ) {
-  	//		// Important to purge variables and free up GPU memory
-  	//		guiState.net.dispose();
-
-  	//		//guiState.net = await handpose.load(+guiState.changeToArchitecture);
-      //  guiState.net = await handpose.load(guiState.maxContinuousChecks, guiState.detectionConfidence, guiState.iouThreshold, guiState.scoreThreshold);
-  	//
-  	//		guiState.changeToMaxChecks = null;
-      //  guiState.changeToMaxConfidence = null;
-      //  guiState.changeToiou = null;
-      //  guiState.changeToScore = null;
-  	//	}
-
   		// Begin monitoring code for frames per second
-  		stats.begin();
+  		if (statsShow) stats.begin();
 
   		ctx.clearRect(0, 0, videoWidth, videoHeight);
 
@@ -347,7 +407,7 @@ function detectHands(video, net)
         sendToMaxPatch(handposeDict);
       }
 
-  		stats.end();
+  		if (statsShow) stats.end();
 
   		requestAnimationFrame(handDetectionFrame);
   	}
@@ -380,7 +440,7 @@ async function bindPage()
 	}
 
 	setupGui([], net);
-	setupFPS();
+	if (statsShow) setupFPS();
   detectHands(video, net);
 }
 

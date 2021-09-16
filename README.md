@@ -1,4 +1,4 @@
-# n4m-handpose
+# n4m-handpose v1.0.1
 Wraps [MediaPipe Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose) inside electron and serves the detected parts via MaxAPI.
 
 ![handpose](https://user-images.githubusercontent.com/43569216/81646758-261df680-946f-11ea-825a-81d8d81abe4e.gif)
@@ -16,9 +16,11 @@ Based around [Yuichi Yogo](https://github.com/yuichkun)'s great work porting Ele
 4. All landmarks are also aggregated to a list to send to [Wekinator](http://www.wekinator.org/) if you'd like to perform gesture recognition with the data (sending to port 11000)
 
 # Steps (MaxForLive)
+- n4m-handposeM4L (Max For Live Device) AMXD coming in 1.1
 
 ### Changelog
-- n4m-handposeM4L (Max For Live Device) AMXD now available
+- Skeleton color can be changed using GUI
+- Settings are persisted using electron-store
 - Handpose model controls now available in electron window UI
 - Skeleton fill and stroke colour available in electron window UI
 - Handpose model control settings and skeleton fill and stroke colour save automatically and persist/reload 

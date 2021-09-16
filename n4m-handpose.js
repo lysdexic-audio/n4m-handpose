@@ -12,11 +12,20 @@ io.on("connection", (socket) => {
 
 	console.log("Socket is connected with Electron App");
 
-	socket.on("dispatch", (data) => {
-		console.log("dispatch: ", data);
+	socket.on("dispatch", (data) => 
+	{
 		MaxAPI.outlet(data);
-	});
 
+		// uncomment only when debugging max api
+		// console.log("dispatch: ", data);
+	});
+	socket.on('disconnect', () => 
+	{
+		MaxAPI.outlet("disconnected", 0);
+		
+		// uncomment only when debugging max api
+		// console.log('user disconnected');
+	});
 });
 
 io.listen(3000);
